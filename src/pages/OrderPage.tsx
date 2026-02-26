@@ -48,6 +48,30 @@ const OrderPage = () => {
     deliveryAddress: "",
   });
 
+  const calculateTotal = () => {
+    let total = form.plan === "premium" ? 59 : 39;
+
+    if (form.deliverySpeed === "priority") {
+      total += 19.9;
+    }
+
+    switch (form.deliveryFormat) {
+      case "email":
+        total += 9.9;
+        break;
+      case "paper":
+        total += 29.9;
+        break;
+      case "frame":
+        total += 59.9;
+        break;
+      default:
+        break;
+    }
+
+    return total;
+  };
+
   const updateForm = (key: string, value: string) => {
     setForm((prev) => ({ ...prev, [key]: value }));
   };
@@ -70,7 +94,7 @@ const OrderPage = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         ...form, // Envoie tous les champs (recipientName, heartMessage, tone, email, etc.)
-        total_price: form.plan === "premium" ? 59 : 39,
+        total_price: calculateTotal(),
         submittedAt: new Date().toISOString(),
       }),
     })
@@ -222,7 +246,7 @@ const OrderPage = () => {
                   <div className="flex justify-between pt-2">
                     <span className="font-semibold text-foreground">Total</span>
                     <span className="font-display text-xl font-bold text-gold">
-                      {form.plan === "premium" ? "59" : "39"} $
+                      {calculateTotal().toFixed(2)} $
                     </span>
                   </div>
                 </div>

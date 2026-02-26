@@ -4,20 +4,20 @@ const steps = [
   {
     icon: ClipboardList,
     step: "01",
-    title: "Share a few details",
-    description: "Tell us who the letter is for and what you want to express.",
+    title: "Share Your Narrative",
+    description: "Entrust us with your story and the emotions you wish to immortalize.",
   },
   {
     icon: PenTool,
     step: "02",
-    title: "Choose the tone",
-    description: "Romantic, poetic, funny, emotional — your style, your voice.",
+    title: "Expert Composition",
+    description: "Our writer draws inspiration from your memories to craft a bespoke masterpiece.",
   },
   {
     icon: Mail,
     step: "03",
-    title: "Receive your letter instantly",
-    description: "A heartfelt letter, ready to download, copy, or send right away.",
+    title: "Elegant Delivery",
+    description: " Receive your refined, handcurated letter via email within a few hours.",
   },
 ];
 

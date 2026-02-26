@@ -7,20 +7,20 @@ import {
 
 const faqs = [
   {
-    question: "How long does it take?",
-    answer: "Most letters are ready instantly. Priority delivery in 4 hours is available for those who need it faster.",
+    question: "What is the timeframe for a masterful composition ?",
+    answer: "To ensure literary depth and emotional resonance, our expert dedicates thenecessary time to refine every word. Your bespoke manuscript will be delivered to your inbox within a few hours.",
   },
   {
-    question: "Is it private?",
-    answer: "Yes — everything is confidential and secure. We take your privacy seriously and never share your personal information.",
+    question: "How is the intimacy of my story preserved ?",
+    answer: "Confidentiality is the cornerstone of our service. Your memories are treated with the utmost discretion, held as securely as a private letter under a wax seal.",
   },
-  {
-    question: "Can I edit the letter?",
-    answer: "Of course. You can adjust it anytime. We provide you with the complete letter so you can make any changes you'd like.",
+{
+  question: "Can I further personalize my masterpiece ?",
+    answer: "Absolument. Bien que chaque lettre soit une œuvre achevée, vous recevez un format qui vous permet d'apporter votre touche finale personnelle avant de l'offrir",
   },
-  {
-    question: "Do I need writing skills?",
-    answer: "Not at all. Just share your story — we do the rest. Our algorithm creates beautiful, personalized letters regardless of your writing experience.",
+{
+  question: "Do I need to be a writer to use this service?",
+    answer: "Nullement. Votre rôle est de nous confier l'émotion ; notre expertise est de lui donner une voix poétique et intemporelle que vous serez fier de signer.",
   },
 ];
 

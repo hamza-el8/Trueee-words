@@ -26,35 +26,34 @@ const Hero = () => {
           {/* <Heart className="w-4 h-4 text-gold" fill="currentColor" /> */}
           <img src={circlee} className="w-10 h-10  text-gold" alt="" />
           <span className="text-primary-foreground/90 text-sm font-body tracking-wide">
-            ⭐⭐⭐⭐⭐ Rated 4.9/5 by romantics worldwide
+            ⭐⭐⭐⭐⭐ Trusted by 10,000+ souls to articulate the unsaid
           </span>
         </div>
 
         <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-primary-foreground mb-6 leading-tight animate-fade-up">
-          Write a beautiful <span className="text-gradient-gold italic">love letter</span> in minutes.
+          The Art of Eloquence: <span className="text-gradient-gold italic"> Your Story, </span>Masterfully Written.
         </h1>
 
         <p className="font-body text-lg md:text-xl text-primary-foreground/80 max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-up" style={{ animationDelay: "0.2s" }}>
-          Crafted with an expert literary touch  personalized for your story, your partner, and your moment.
+          Bespoke literary compositions tailored to your deepest emotions, your partner, and your moment.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style={{ animationDelay: "0.4s" }}>
           <a href="#masterpiece-category">
             <Button size="lg" className="bg-gold hover:bg-gold-light text-accent-foreground font-body font-semibold text-base px-8 py-6 rounded-full shadow-gold transition-all duration-300 hover:scale-105">
-              Create My Letter
+              Commission Your Masterpiece
               <img src={stylo} alt="stylo" className="w-10 h-10 object-contain" />
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
           </a>
         </div>
-        {/* <p className="font-body text-sm text-primary-foreground/70 max-w-xl mx-auto mt-6 animate-fade-up" style={{ animationDelay: "0.5s" }}>
-          No writing skills needed. Just answer a few quick questions.
-        </p> */}
+        <p className="font-body text-sm text-primary-foreground/70 max-w-xl mx-auto mt-6 animate-fade-up" style={{ animationDelay: "0.5s" }}>
+          Curated by our Proprietary Literary Engine        </p>
       </div>
 
       {/* Scroll indicator (replaced with stylo image) */}
       <div className="absolute bottom-1 flex items-center justify-center">
-        <img src={circlee} alt="stylo" className="w-35 h-20 object-contain" /> 
+        <img src={circlee} alt="stylo" className="w-35 h-20 object-contain" />
       </div>
 
 

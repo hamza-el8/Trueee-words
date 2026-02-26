@@ -198,11 +198,11 @@ const Occasions = () => {
                   <div>
                     <h4 className="font-semibold text-red-900 text-foreground">
                       {/* Lettre Digitale Instantanée */}
-                      Instant Digital Manuscript
+                      Curated Digital Manuscript
                     </h4>
                     <p className="text-sm text-slate-400">
                       {/* Recevez votre lettre personnalisée en quelques secondes au format PDF. */}
-                      Receive your personalized letter in seconds as a highresolution PDF.
+                       Your personalized masterpiece, refined and delivered as a highresolution digital heirloom.
                     </p>
                   </div>
                 </div>
@@ -215,11 +215,11 @@ const Occasions = () => {
                   <div>
                     <h4 className="font-semibold text-red-900 text-foreground">
                       {/* Livraison Prioritaire (4H) */}
-                      Priority Delivery (4H)
+                       Priority Literary Review 
                     </h4>
                     <p className="text-sm text-slate-400">
                       {/* Besoin urgent ? Votre lettre livrée en 4 heures maximum. */}
-                      In a rush? Your masterpiece delivered to your inbox in under 4 hours.
+                       Our expert prioritizes your request to ensure a perfect, hand-curated composition within 4 hours.
                     </p>
                   </div>
                 </div>
@@ -230,19 +230,19 @@ const Occasions = () => {
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 bg-red-900 rounded-md flex items-center justify-center text-white">✉️</div>
                   <div>
-                    <h4 className="font-semibold text-red-900 text-foreground">Premium Art-Email</h4>
-                    <p className="text-sm text-slate-400">Delivered to your recipient with an exquisite artistic layout and design.</p>
+                    <h4 className="font-semibold text-red-900 text-foreground">The Art-Gallery Dispatch</h4>
+                    <p className="text-sm text-slate-400">An exquisite digital presentation where your letter is framed within a bespoke artistic layout.</p>
                   </div>
                 </div>
-                <div className="text-amber-300 font-semibold">+$9.90</div>
+                <div className="text-amber-300 font-semibold">Included</div>
               </div>
 
               <div className="bg-card rounded-xl p-6 border border-amber-800/30 flex items-start justify-between">
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 bg-red-900 rounded-md flex items-center justify-center text-white">📜</div>
                   <div>
-                    <h4 className="font-semibold text-red-900 text-foreground">Luxury Paper & GoldWax Seal</h4>
-                    <p className="text-sm text-slate-400">Printed on premium archival paper, hand-sealed with wax in an elegant envelope.</p>
+                    <h4 className="font-semibold text-red-900 text-foreground">The Heritage Parchment</h4>
+                    <p className="text-sm text-slate-400">Your story captured on archival paper, hand-sealed with gold wax in a prestige envelope.</p>
                   </div>
                 </div>
                 <div className="text-amber-300 font-semibold">+$29.90</div>
@@ -252,8 +252,8 @@ const Occasions = () => {
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 bg-red-900 rounded-md flex items-center justify-center text-white">🖼️</div>
                   <div>
-                    <h4 className="font-semibold text-red-900 text-foreground">Framed Heritage Edition</h4>
-                    <p className="text-sm text-slate-400">Your letter professionally framed and delivered in luxury packaging to your doorstep. </p>
+                    <h4 className="font-semibold text-red-900 text-foreground">The Framed Masterpiece</h4>
+                    <p className="text-sm text-slate-400">A museum-grade framed edition of your letter, delivered in luxury collector's packaging. </p>
                   </div>
                 </div>
                 <div className="text-amber-300 font-semibold">+$59.90</div>

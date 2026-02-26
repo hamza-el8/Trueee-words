@@ -10,7 +10,7 @@ interface Props {
 const DeliveryStep: React.FC<Props> = ({ form, updateForm }) => {
   const formats = [
     { value: "pdf", label: "Elegant PDF", price: "", desc: "Instant download" },
-    { value: "email", label: "Decorated Email", price: "+9.90$", desc: "Sent directly to the recipient" },
+    { value: "email", label: "Decorated Email", desc: "Sent directly to the recipient" },
     { value: "paper", label: "Sealed Paper & Envelope", price: "+29.90$", desc: "Printed on premium paper" },
     { value: "frame", label: "Premium Framed Delivery", price: "+59.90$", desc: "Framed letter, delivered to your home" },
   ];

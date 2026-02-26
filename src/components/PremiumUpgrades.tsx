@@ -16,9 +16,9 @@ const upgrades = [
     icon: Zap,
   },
   {
-    title: "Premium Gift Options",
-    description: "Printed and framed love letter delivery will soon be available across the USA.",
-    badge: "Coming Soon",
+    title: "Heritage Physical Editions",
+    description: "Choose between a gold-wax sealed envelope on archival paper or a museum-grade framed masterpiece.",
+    badge: "Limited Artisanal Release",
     icon: Zap,
   },
 ];
