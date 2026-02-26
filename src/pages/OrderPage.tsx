@@ -46,6 +46,7 @@ const OrderPage = () => {
     fullName: "",
     phone: "",
     deliveryAddress: "",
+    recipientEmail: "",
   });
 
   const calculateTotal = () => {
@@ -80,7 +81,13 @@ const OrderPage = () => {
     if (step === 1) return form.recipientName && form.relationship;
     if (step === 2) return form.letterType && form.occasion && form.specialQualities;
     if (step === 3) return form.heartMessage && form.tone && form.length;
-    if (step === 4) return true;
+    if (step === 4) {
+      if (!form.deliveryFormat) return false;
+      if (form.deliveryFormat === "pdf" || form.deliveryFormat === "email") {
+        return !!form.recipientEmail;
+      }
+      return true;
+    }
     if (step === 5) return form.email && form.fullName && form.phone && form.deliveryAddress;
     return true;
   };
@@ -138,10 +145,10 @@ const OrderPage = () => {
               <div key={i} className="flex flex-col items-center flex-1">
                 <div
                   className={`w-12 h-12 rounded-full flex items-center justify-center font-display font-bold text-lg transition-all ${i < step
-                      ? "bg-primary text-primary-foreground"
-                      : i === step - 1
-                        ? "bg-primary text-primary-foreground ring-2 ring-primary ring-offset-2"
-                        : "bg-muted text-muted-foreground"
+                    ? "bg-primary text-primary-foreground"
+                    : i === step - 1
+                      ? "bg-primary text-primary-foreground ring-2 ring-primary ring-offset-2"
+                      : "bg-muted text-muted-foreground"
                     }`}
                 >
                   {i + 1}

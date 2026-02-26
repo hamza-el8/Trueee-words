@@ -1,5 +1,6 @@
 import React from "react";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 interface Props {
@@ -90,6 +91,24 @@ const DeliveryStep: React.FC<Props> = ({ form, updateForm }) => {
             ))}
           </div>
         </RadioGroup>
+
+        {(form.deliveryFormat === "pdf" || form.deliveryFormat === "email") && (
+          <div className="mt-6 animate-fade-in bg-secondary/20 p-4 rounded-xl border border-border">
+            <Label className="font-body text-sm font-semibold mb-2 block text-foreground">
+              Recipient's Details *
+            </Label>
+            <p className="text-xs text-muted-foreground mb-3">
+              Please provide the name or email of the person who will receive the letter.
+            </p>
+            <Input
+              type="text"
+              placeholder="Name or Email address"
+              value={form.recipientEmail || ""}
+              onChange={(e) => updateForm("recipientEmail", e.target.value)}
+              className="rounded-lg h-12 bg-background"
+            />
+          </div>
+        )}
       </div>
     </div>
   );
