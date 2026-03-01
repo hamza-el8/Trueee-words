@@ -31,6 +31,7 @@ const OrderPage = () => {
     letterType: "",
     recipientName: "",
     recipientNickname: "",
+    recipientGender: "",
     relationship: "",
     occasion: "",
     specialQualities: "",
@@ -78,7 +79,7 @@ const OrderPage = () => {
   };
 
   const canNext = () => {
-    if (step === 1) return form.recipientName && form.relationship;
+    if (step === 1) return form.recipientName && form.recipientGender && form.relationship;
     if (step === 2) return form.letterType && form.occasion && form.specialQualities;
     if (step === 3) return form.heartMessage && form.tone && form.length;
     if (step === 4) {
@@ -236,7 +237,7 @@ const OrderPage = () => {
                 <div className="space-y-3 font-body text-sm">
                   <div className="flex justify-between pb-2 border-b border-border">
                     <span className="text-muted-foreground">Recipient</span>
-                    <span className="text-foreground font-medium">{form.recipientName || "—"}</span>
+                    <span className="text-foreground font-medium">{form.recipientName || "—"} {form.recipientGender ? `(${form.recipientGender})` : ""}</span>
                   </div>
                   <div className="flex justify-between pb-2 border-b border-border">
                     <span className="text-muted-foreground">Letter type</span>

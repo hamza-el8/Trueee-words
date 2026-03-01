@@ -42,7 +42,7 @@ const Hero = () => {
           <a href="#masterpiece-category">
             <Button size="lg" className="bg-gold hover:bg-gold-light text-accent-foreground font-body font-semibold text-base px-8 py-6 rounded-full shadow-gold transition-all duration-300 hover:scale-105">
               Commission Your Masterpiece
-              <img src={stylo} alt="stylo" className="w-10 h-10 object-contain" />
+              <img src={stylo} alt="stylo" className="w-10 h-10 object-contain ml-2" />
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
           </a>

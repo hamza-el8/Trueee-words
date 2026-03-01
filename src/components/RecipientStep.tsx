@@ -2,6 +2,7 @@ import React from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface Props {
   form: any;
@@ -38,6 +39,20 @@ const RecipientStep: React.FC<Props> = ({ form, updateForm }) => {
       </div>
 
       <div>
+        <Label className="font-body text-sm font-semibold mb-3 block">Recipient's gender *</Label>
+        <Select value={form.recipientGender} onValueChange={(v) => updateForm("recipientGender", v)}>
+          <SelectTrigger className="w-full h-12 rounded-lg bg-background border-border">
+            <SelectValue placeholder="Select gender" className="font-body text-muted-foreground" />
+          </SelectTrigger>
+          <SelectContent className="bg-background border-border">
+            <SelectItem value="male" className="font-body cursor-pointer">Male</SelectItem>
+            <SelectItem value="female" className="font-body cursor-pointer">Female</SelectItem>
+            <SelectItem value="other" className="font-body cursor-pointer">Other</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div>
         <Label className="font-body text-sm font-semibold mb-3 block">Your relationship *</Label>
         <RadioGroup value={form.relationship} onValueChange={(v) => updateForm("relationship", v)} className="grid grid-cols-2 md:grid-cols-5 gap-3">
           {[
@@ -49,9 +64,8 @@ const RecipientStep: React.FC<Props> = ({ form, updateForm }) => {
           ].map((rel) => (
             <Label
               key={rel.value}
-              className={`flex items-center justify-center p-3 rounded-lg border-2 cursor-pointer transition-all text-center text-xs md:text-sm ${
-                form.relationship === rel.value ? "border-primary bg-primary/5" : "border-border"
-              }`}
+              className={`flex items-center justify-center p-3 rounded-lg border-2 cursor-pointer transition-all text-center text-xs md:text-sm ${form.relationship === rel.value ? "border-primary bg-primary/5" : "border-border"
+                }`}
             >
               <RadioGroupItem value={rel.value} className="sr-only" />
               <span className="font-body">{rel.label}</span>
