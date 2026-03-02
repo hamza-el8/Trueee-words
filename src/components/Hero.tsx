@@ -31,8 +31,8 @@ const Hero = () => {
         </div>
 
         <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-6 leading-tight animate-fade-up">
-          The Art of Eloquence: <span className="text-gradient-gold italic"> Your Story, </span>Masterfully Written.
-        </h1>
+          The Art of Eloquence <span className="text-gradient-gold italic"> Your Story, </span>Masterfully Written
+        </h1> 
 
         <p className="font-body text-lg md:text-xl text-primary-foreground/80 max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-up" style={{ animationDelay: "0.2s" }}>
           Bespoke literary compositions tailored to your deepest emotions, your partner, and your moment.
