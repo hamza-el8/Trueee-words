@@ -30,7 +30,7 @@ const Hero = () => {
           </span>
         </div>
 
-        <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-primary-foreground mb-6 leading-tight animate-fade-up">
+        <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-6 leading-tight animate-fade-up">
           The Art of Eloquence: <span className="text-gradient-gold italic"> Your Story, </span>Masterfully Written.
         </h1>
 
