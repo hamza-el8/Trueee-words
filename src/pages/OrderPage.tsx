@@ -54,7 +54,7 @@ const OrderPage = () => {
     deliveryTime: "",
   });
 
-  const calculateTotal = () => {
+  const calculateSubtotal = () => {
     let total = 39; // Base price for standard plan
 
     if (form.deliverySpeed === "instant") {
@@ -73,6 +73,12 @@ const OrderPage = () => {
       default:
         break;
     }
+
+    return total;
+  };
+
+  const calculateTotal = () => {
+    let total = calculateSubtotal();
 
     if (discount > 0) {
       total = total * (1 - discount);
@@ -277,9 +283,16 @@ const OrderPage = () => {
                   )}
                   <div className="flex justify-between pt-2">
                     <span className="font-semibold text-foreground">Total</span>
-                    <span className="font-display text-xl font-bold text-gold">
-                      {calculateTotal().toFixed(2)} $
-                    </span>
+                    <div className="flex flex-col items-end">
+                      {discount > 0 && (
+                        <span className="text-muted-foreground line-through text-sm font-medium opacity-70 mb-0.5">
+                          {calculateSubtotal().toFixed(2)} $
+                        </span>
+                      )}
+                      <span className="font-display text-xl font-bold text-gold">
+                        {calculateTotal().toFixed(2)} $
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
