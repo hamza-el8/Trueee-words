@@ -101,8 +101,10 @@ const OrderPage = () => {
     if (step === 3) return form.heartMessage && form.tone && form.length;
     if (step === 4) {
       if (!form.deliveryFormat) return false;
+      const requiresDetails = form.deliveryFormat === "email" || form.deliveryFormat === "pdf" || form.deliverySpeed === "scheduled";
+      if (!requiresDetails) return true;
       if ((form.deliveryFormat === "email" || form.deliveryFormat === "pdf") && !form.recipientEmail) return false;
-      if (form.deliverySpeed === "scheduled" && (!form.deliveryDate || !form.deliveryTime)) return false;
+      if (!form.deliveryDate || !form.deliveryTime) return false;
       return true;
     }
     if (step === 5) return form.email && form.fullName && form.phone && form.deliveryAddress;
