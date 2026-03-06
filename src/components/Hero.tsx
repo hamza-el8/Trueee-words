@@ -39,7 +39,7 @@ const Hero = () => {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style={{ animationDelay: "0.4s" }}>
-          <a href="#masterpiece-category">
+          <a href="#masterpiece-category"> 
             <Button size="lg" className="bg-gold hover:bg-gold-light text-accent-foreground font-body font-semibold text-base px-8 py-6 rounded-full shadow-gold transition-all duration-300 hover:scale-105">
               Commission Your Masterpiece
               <img src={stylo} alt="stylo" className="w-10 h-10 object-contain ml-2" />

@@ -18,6 +18,8 @@ import DeliveryStep from "@/components/DeliveryStep";
 const OrderPage = () => {
   const [step, setStep] = useState(1);
   const totalSteps = 5;
+  const [promoCodeInput, setPromoCodeInput] = useState("");
+  const [discount, setDiscount] = useState(0);
 
   const steps = [
     { number: 1, label: "Recipient", desc: "Who will receive this letter?" },
@@ -48,19 +50,20 @@ const OrderPage = () => {
     phone: "",
     deliveryAddress: "",
     recipientEmail: "",
+    deliveryDate: "",
+    deliveryTime: "",
   });
 
   const calculateTotal = () => {
-    let total = form.plan === "premium" ? 59 : 39;
+    let total = 39; // Base price for standard plan
 
-    if (form.deliverySpeed === "priority") {
-      total += 19.9;
+    if (form.deliverySpeed === "instant") {
+      total += 14.9;
+    } else if (form.deliverySpeed === "scheduled") {
+      total += 9.9;
     }
 
     switch (form.deliveryFormat) {
-      case "email":
-        total += 9.9;
-        break;
       case "paper":
         total += 29.9;
         break;
@@ -71,7 +74,21 @@ const OrderPage = () => {
         break;
     }
 
+    if (discount > 0) {
+      total = total * (1 - discount);
+    }
+
     return total;
+  };
+
+  const applyPromo = () => {
+    if (promoCodeInput.trim().length > 0) {
+      setDiscount(0.25);
+      toast.success("Promo code applied: -25% off!", { duration: 3000 });
+    } else {
+      setDiscount(0);
+      toast.error("Please enter a promo code", { duration: 3000 });
+    }
   };
 
   const updateForm = (key: string, value: string) => {
@@ -84,9 +101,8 @@ const OrderPage = () => {
     if (step === 3) return form.heartMessage && form.tone && form.length;
     if (step === 4) {
       if (!form.deliveryFormat) return false;
-      if (form.deliveryFormat === "pdf" || form.deliveryFormat === "email") {
-        return !!form.recipientEmail;
-      }
+      if ((form.deliveryFormat === "email" || form.deliveryFormat === "pdf") && !form.recipientEmail) return false;
+      if (form.deliverySpeed === "scheduled" && (!form.deliveryDate || !form.deliveryTime)) return false;
       return true;
     }
     if (step === 5) return form.email && form.fullName && form.phone && form.deliveryAddress;
@@ -251,6 +267,12 @@ const OrderPage = () => {
                     <span className="text-muted-foreground">Length</span>
                     <span className="text-foreground font-medium capitalize">{form.length || "—"}</span>
                   </div>
+                  {discount > 0 && (
+                    <div className="flex justify-between pb-2 border-b border-border text-green-600">
+                      <span className="font-semibold">Discount</span>
+                      <span className="font-medium">-{(discount * 100).toFixed(0)}%</span>
+                    </div>
+                  )}
                   <div className="flex justify-between pt-2">
                     <span className="font-semibold text-foreground">Total</span>
                     <span className="font-display text-xl font-bold text-gold">
@@ -258,6 +280,23 @@ const OrderPage = () => {
                     </span>
                   </div>
                 </div>
+              </div>
+
+              <div className="flex gap-3">
+                <Input
+                  type="text"
+                  placeholder="Promo code (e.g. WELCOME20)"
+                  value={promoCodeInput}
+                  onChange={(e) => setPromoCodeInput(e.target.value)}
+                  className="rounded-lg h-12 uppercase flex-1"
+                />
+                <Button
+                  onClick={applyPromo}
+                  variant="outline"
+                  className="h-12 px-6 rounded-lg font-body font-semibold"
+                >
+                  Apply
+                </Button>
               </div>
             </div>
           )}
