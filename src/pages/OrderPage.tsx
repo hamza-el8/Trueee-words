@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { Checkbox } from "@/components/ui/checkbox";
 import RecipientStep from "@/components/RecipientStep";
 import OccasionStep from "@/components/OccasionStep";
 import MessageToneStep from "@/components/MessageToneStep";
@@ -54,6 +55,7 @@ const OrderPage = () => {
     deliveryTime: "",
     isInstant: false,
     isScheduled: false,
+    isAnonymous: false,
   });
 
   const calculateSubtotal = () => {
@@ -100,7 +102,7 @@ const OrderPage = () => {
     }
   };
 
-  const updateForm = (key: string, value: string) => {
+  const updateForm = (key: string, value: any) => {
     setForm((prev) => ({ ...prev, [key]: value }));
   };
 
@@ -245,6 +247,26 @@ const OrderPage = () => {
                     onChange={(e) => updateForm("phone", e.target.value)}
                     className="rounded-lg h-12"
                   />
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-3 mb-4 mt-2">
+                <Checkbox
+                  id="anonymous"
+                  checked={form.isAnonymous}
+                  onCheckedChange={(checked) => updateForm("isAnonymous", checked === true)}
+                  className="mt-0.5"
+                />
+                <div className="grid gap-1.5 leading-none">
+                  <label
+                    htmlFor="anonymous"
+                    className="text-sm font-semibold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-foreground cursor-pointer"
+                  >
+                    Send as anonymous
+                  </label>
+                  <p className="text-[13px] text-muted-foreground">
+                    (Check this if you don't want your name to appear in the letter.)
+                  </p>
                 </div>
               </div>
 
