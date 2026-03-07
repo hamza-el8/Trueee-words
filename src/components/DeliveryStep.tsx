@@ -111,7 +111,11 @@ const DeliveryStep: React.FC<Props> = ({ form, updateForm }) => {
               Delivery Details *
             </Label>
             <p className="text-[13px] text-muted-foreground mb-4">
-              Please provide the recipient's email as well as the delivery date and time.
+              {form.deliverySpeed === "scheduled" && (form.deliveryFormat === "email" || form.deliveryFormat === "pdf")
+                ? "Please provide the recipient's email as well as the delivery date and time."
+                : form.deliverySpeed === "scheduled"
+                  ? "Please provide the exact date and time for delivery."
+                  : "Please provide the email of the person who will receive the letter."}
             </p>
             <div className="space-y-4">
               {(form.deliveryFormat === "email" || form.deliveryFormat === "pdf") && (
@@ -127,44 +131,46 @@ const DeliveryStep: React.FC<Props> = ({ form, updateForm }) => {
                 </div>
               )}
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-[13px] text-muted-foreground">Delivery Date *</Label>
-                  <Input
-                    type="date"
-                    value={form.deliveryDate || ""}
-                    min={(() => {
-                      const hours = form.deliverySpeed === "instant" ? 3 : 12;
-                      const offsetDate = new Date(Date.now() + hours * 60 * 60 * 1000);
-                      const userTimeOffset = offsetDate.getTimezoneOffset() * 60000;
-                      return new Date(offsetDate.getTime() - userTimeOffset).toISOString().split('T')[0];
-                    })()}
-                    onChange={(e) => updateForm("deliveryDate", e.target.value)}
-                    className="rounded-lg h-12 bg-background"
-                  />
+              {form.deliverySpeed === "scheduled" && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label className="text-[13px] text-muted-foreground">Delivery Date *</Label>
+                    <Input
+                      type="date"
+                      value={form.deliveryDate || ""}
+                      min={(() => {
+                        const hours = form.deliverySpeed === "instant" ? 3 : 12;
+                        const offsetDate = new Date(Date.now() + hours * 60 * 60 * 1000);
+                        const userTimeOffset = offsetDate.getTimezoneOffset() * 60000;
+                        return new Date(offsetDate.getTime() - userTimeOffset).toISOString().split('T')[0];
+                      })()}
+                      onChange={(e) => updateForm("deliveryDate", e.target.value)}
+                      className="rounded-lg h-12 bg-background"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-[13px] text-muted-foreground">Delivery Time *</Label>
+                    <Input
+                      type="time"
+                      value={form.deliveryTime || ""}
+                      min={(() => {
+                        const hours = form.deliverySpeed === "instant" ? 3 : 12;
+                        const offsetDate = new Date(Date.now() + hours * 60 * 60 * 1000);
+                        const userTimeOffset = offsetDate.getTimezoneOffset() * 60000;
+                        const minDateString = new Date(offsetDate.getTime() - userTimeOffset).toISOString().split('T')[0];
+                        if (form.deliveryDate === minDateString) {
+                          const h = offsetDate.getHours().toString().padStart(2, '0');
+                          const m = offsetDate.getMinutes().toString().padStart(2, '0');
+                          return `${h}:${m}`;
+                        }
+                        return undefined;
+                      })()}
+                      onChange={(e) => updateForm("deliveryTime", e.target.value)}
+                      className="rounded-lg h-12 bg-background"
+                    />
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <Label className="text-[13px] text-muted-foreground">Delivery Time *</Label>
-                  <Input
-                    type="time"
-                    value={form.deliveryTime || ""}
-                    min={(() => {
-                      const hours = form.deliverySpeed === "instant" ? 3 : 12;
-                      const offsetDate = new Date(Date.now() + hours * 60 * 60 * 1000);
-                      const userTimeOffset = offsetDate.getTimezoneOffset() * 60000;
-                      const minDateString = new Date(offsetDate.getTime() - userTimeOffset).toISOString().split('T')[0];
-                      if (form.deliveryDate === minDateString) {
-                        const h = offsetDate.getHours().toString().padStart(2, '0');
-                        const m = offsetDate.getMinutes().toString().padStart(2, '0');
-                        return `${h}:${m}`;
-                      }
-                      return undefined;
-                    })()}
-                    onChange={(e) => updateForm("deliveryTime", e.target.value)}
-                    className="rounded-lg h-12 bg-background"
-                  />
-                </div>
-              </div>
+              )}
             </div>
           </div>
         )}
