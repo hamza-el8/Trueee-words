@@ -52,14 +52,17 @@ const OrderPage = () => {
     recipientEmail: "",
     deliveryDate: "",
     deliveryTime: "",
+    isInstant: false,
+    isScheduled: false,
   });
 
   const calculateSubtotal = () => {
     let total = 39; // Base price for standard plan
 
-    if (form.deliverySpeed === "instant") {
+    if (form.isInstant) {
       total += 14.9;
-    } else if (form.deliverySpeed === "scheduled") {
+    }
+    if (form.isScheduled) {
       total += 9.9;
     }
 
@@ -107,10 +110,10 @@ const OrderPage = () => {
     if (step === 3) return form.heartMessage && form.tone && form.length;
     if (step === 4) {
       if (!form.deliveryFormat) return false;
-      const requiresDetails = form.deliveryFormat === "email" || form.deliveryFormat === "pdf" || form.deliverySpeed === "scheduled";
+      const requiresDetails = form.deliveryFormat === "email" || form.deliveryFormat === "pdf" || form.isScheduled;
       if (!requiresDetails) return true;
       if ((form.deliveryFormat === "email" || form.deliveryFormat === "pdf") && !form.recipientEmail) return false;
-      if (!form.deliveryDate || !form.deliveryTime) return false;
+      if (form.isScheduled && (!form.deliveryDate || !form.deliveryTime)) return false;
       return true;
     }
     if (step === 5) return form.email && form.fullName && form.phone && form.deliveryAddress;
