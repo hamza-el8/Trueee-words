@@ -10,6 +10,44 @@ interface Props {
 
 const DeliveryStep: React.FC<Props> = ({ form, updateForm }) => {
 
+  const getMinDateTime = () => {
+    const hours = form.isInstant ? 3 : 12;
+    const offsetDate = new Date(Date.now() + hours * 60 * 60 * 1000);
+    const userTimeOffset = offsetDate.getTimezoneOffset() * 60000;
+    const minDateString = new Date(offsetDate.getTime() - userTimeOffset).toISOString().split('T')[0];
+    const h = offsetDate.getHours().toString().padStart(2, '0');
+    const m = offsetDate.getMinutes().toString().padStart(2, '0');
+    return { minDateString, minTimeString: `${h}:${m}` };
+  };
+
+  const handleDateChange = (val: string) => {
+    const { minDateString, minTimeString } = getMinDateTime();
+    if (val && val < minDateString) {
+      val = minDateString;
+    }
+    updateForm("deliveryDate", val);
+    
+    if (val === minDateString && form.deliveryTime && form.deliveryTime < minTimeString) {
+      updateForm("deliveryTime", minTimeString);
+    }
+  };
+
+  const handleTimeChange = (val: string) => {
+    const { minDateString, minTimeString } = getMinDateTime();
+    let currentDate = form.deliveryDate;
+    
+    // Automatically set the delivery date if the user selects the time first
+    if (!currentDate) {
+      currentDate = minDateString;
+      updateForm("deliveryDate", minDateString);
+    }
+    
+    if (currentDate === minDateString && val && val < minTimeString) {
+      val = minTimeString;
+    }
+    updateForm("deliveryTime", val);
+  };
+
   const formats = [
     { value: "pdf", label: "Elegant PDF", price: "", desc: "Instant download" },
     { value: "email", label: "Decorated Email", price: "", desc: "Sent directly to the recipient" },
@@ -95,7 +133,7 @@ const DeliveryStep: React.FC<Props> = ({ form, updateForm }) => {
           </div>
         </RadioGroup>
 
-        {((form.deliveryFormat === "email" || form.deliveryFormat === "pdf") || form.isScheduled) && (
+        {((form.deliveryFormat === "email" || form.deliveryFormat === "pdf") || form.isScheduled || (!form.isInstant && !form.isScheduled)) && (
           <div className="mt-8 animate-fade-in bg-secondary/20 p-6 rounded-xl border border-border">
             <Label className="font-body text-[15px] font-semibold mb-2 block text-foreground">
               Delivery Details *
@@ -105,7 +143,9 @@ const DeliveryStep: React.FC<Props> = ({ form, updateForm }) => {
                 ? "Please provide the recipient's email as well as the delivery date and time."
                 : form.isScheduled
                   ? "Please provide the exact date and time for delivery."
-                  : "Please provide the email of the person who will receive the letter."}
+                  : (!form.isInstant && !form.isScheduled)
+                    ? "Please provide the delivery date, time, and recipient email for standard delivery."
+                    : "Please provide the email of the person who will receive the letter."}
             </p>
             <div className="space-y-4">
               {(form.deliveryFormat === "email" || form.deliveryFormat === "pdf") && (
@@ -121,20 +161,15 @@ const DeliveryStep: React.FC<Props> = ({ form, updateForm }) => {
                 </div>
               )}
 
-              {form.isScheduled && (
+              {(form.isScheduled || (!form.isInstant && !form.isScheduled)) && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label className="text-[13px] text-muted-foreground">Delivery Date *</Label>
                     <Input
                       type="date"
                       value={form.deliveryDate || ""}
-                      min={(() => {
-                        const hours = form.isInstant ? 3 : 12;
-                        const offsetDate = new Date(Date.now() + hours * 60 * 60 * 1000);
-                        const userTimeOffset = offsetDate.getTimezoneOffset() * 60000;
-                        return new Date(offsetDate.getTime() - userTimeOffset).toISOString().split('T')[0];
-                      })()}
-                      onChange={(e) => updateForm("deliveryDate", e.target.value)}
+                      min={getMinDateTime().minDateString}
+                      onChange={(e) => handleDateChange(e.target.value)}
                       className="rounded-lg h-12 bg-background"
                     />
                   </div>
@@ -143,21 +178,22 @@ const DeliveryStep: React.FC<Props> = ({ form, updateForm }) => {
                     <Input
                       type="time"
                       value={form.deliveryTime || ""}
-                      min={(() => {
-                        const hours = form.isInstant ? 3 : 12;
-                        const offsetDate = new Date(Date.now() + hours * 60 * 60 * 1000);
-                        const userTimeOffset = offsetDate.getTimezoneOffset() * 60000;
-                        const minDateString = new Date(offsetDate.getTime() - userTimeOffset).toISOString().split('T')[0];
-                        if (form.deliveryDate === minDateString) {
-                          const h = offsetDate.getHours().toString().padStart(2, '0');
-                          const m = offsetDate.getMinutes().toString().padStart(2, '0');
-                          return `${h}:${m}`;
+                      min={(!form.deliveryDate || form.deliveryDate === getMinDateTime().minDateString) ? getMinDateTime().minTimeString : undefined}
+                      onChange={(e) => handleTimeChange(e.target.value)}
+                      onClick={(e) => {
+                        // If no time is set and we're on the min date, we can proactively update to at least minTime when they click
+                        const { minDateString, minTimeString } = getMinDateTime();
+                        if (!form.deliveryTime && (!form.deliveryDate || form.deliveryDate === minDateString)) {
+                          updateForm("deliveryTime", minTimeString);
                         }
-                        return undefined;
-                      })()}
-                      onChange={(e) => updateForm("deliveryTime", e.target.value)}
+                      }}
                       className="rounded-lg h-12 bg-background"
                     />
+                    {(!form.deliveryDate || form.deliveryDate === getMinDateTime().minDateString) && (
+                      <div className="text-xs text-[#eba354] mt-1 pl-1 font-medium">
+                        Min time allowed: {getMinDateTime().minTimeString}
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
