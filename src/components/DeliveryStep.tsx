@@ -11,12 +11,24 @@ interface Props {
 const DeliveryStep: React.FC<Props> = ({ form, updateForm }) => {
 
   const getMinDateTime = () => {
-    const hours = form.isInstant ? 3 : 12;
-    const offsetDate = new Date(Date.now() + hours * 60 * 60 * 1000);
-    const userTimeOffset = offsetDate.getTimezoneOffset() * 60000;
-    const minDateString = new Date(offsetDate.getTime() - userTimeOffset).toISOString().split('T')[0];
-    const h = offsetDate.getHours().toString().padStart(2, '0');
-    const m = offsetDate.getMinutes().toString().padStart(2, '0');
+    // 1. Définition du délai selon l'offre choisie
+    const hoursToAdd = form.isInstant ? 3 : 12;
+    
+    // 2. Calcul du moment limite
+    const now = new Date();
+    const limit = new Date(now.getTime() + hoursToAdd * 60 * 60 * 1000);
+
+    // 3. Extraction sécurisée de la date (Format YYYY-MM-DD)
+    // On utilise le temps local pour éviter le bug du décalage d'un jour à minuit
+    const year = limit.getFullYear();
+    const month = String(limit.getMonth() + 1).padStart(2, '0');
+    const day = String(limit.getDate()).padStart(2, '0');
+    const minDateString = `${year}-${month}-${day}`;
+    
+    // 4. Extraction de l'heure (Format HH:mm)
+    const h = String(limit.getHours()).padStart(2, '0');
+    const m = String(limit.getMinutes()).padStart(2, '0');
+    
     return { minDateString, minTimeString: `${h}:${m}` };
   };
 
