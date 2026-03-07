@@ -91,12 +91,12 @@ const OrderPage = () => {
   };
 
   const applyPromo = () => {
-    if (promoCodeInput.trim().length > 0) {
+    if (promoCodeInput.trim().toUpperCase() === "PRESTIGE25") {
       setDiscount(0.25);
       toast.success("Promo code applied: -25% off!", { duration: 3000 });
     } else {
       setDiscount(0);
-      toast.error("Please enter a promo code", { duration: 3000 });
+      toast.error("Invalid promo code", { duration: 3000 });
     }
   };
 

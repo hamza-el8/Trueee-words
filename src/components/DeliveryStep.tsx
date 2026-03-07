@@ -5,7 +5,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 interface Props {
   form: any;
-  updateForm: (key: string, value: string) => void;
+  updateForm: (key: string, value: any) => void;
 }
 
 const DeliveryStep: React.FC<Props> = ({ form, updateForm }) => {
