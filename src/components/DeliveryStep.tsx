@@ -13,7 +13,7 @@ const DeliveryStep: React.FC<Props> = ({ form, updateForm }) => {
   const getMinDateTime = () => {
     // 1. Définition du délai selon l'offre choisie
     const hoursToAdd = form.isInstant ? 3 : 12;
-    
+
     // 2. Calcul du moment limite
     const now = new Date();
     const limit = new Date(now.getTime() + hoursToAdd * 60 * 60 * 1000);
@@ -24,21 +24,22 @@ const DeliveryStep: React.FC<Props> = ({ form, updateForm }) => {
     const month = String(limit.getMonth() + 1).padStart(2, '0');
     const day = String(limit.getDate()).padStart(2, '0');
     const minDateString = `${year}-${month}-${day}`;
-    
+
     // 4. Extraction de l'heure (Format HH:mm)
     const h = String(limit.getHours()).padStart(2, '0');
     const m = String(limit.getMinutes()).padStart(2, '0');
-    
+
     return { minDateString, minTimeString: `${h}:${m}` };
   };
 
   const handleDateChange = (val: string) => {
     const { minDateString, minTimeString } = getMinDateTime();
+
     if (val && val < minDateString) {
       val = minDateString;
     }
     updateForm("deliveryDate", val);
-    
+
     if (val === minDateString && form.deliveryTime && form.deliveryTime < minTimeString) {
       updateForm("deliveryTime", minTimeString);
     }
@@ -47,17 +48,30 @@ const DeliveryStep: React.FC<Props> = ({ form, updateForm }) => {
   const handleTimeChange = (val: string) => {
     const { minDateString, minTimeString } = getMinDateTime();
     let currentDate = form.deliveryDate;
-    
-    // Automatically set the delivery date if the user selects the time first
+
     if (!currentDate) {
       currentDate = minDateString;
       updateForm("deliveryDate", minDateString);
     }
-    
+
     if (currentDate === minDateString && val && val < minTimeString) {
       val = minTimeString;
+    } else if (currentDate && currentDate < minDateString) {
+      updateForm("deliveryDate", minDateString);
+      if (val && val < minTimeString) {
+        val = minTimeString;
+      }
     }
+
     updateForm("deliveryTime", val);
+  };
+
+  const isDateTimeValid = () => {
+    if (!form.deliveryDate || !form.deliveryTime) return true;
+    const hoursToAdd = form.isInstant ? 3 : 12;
+    const limitDate = new Date(new Date().getTime() + hoursToAdd * 60 * 60 * 1000);
+    const selectedDate = new Date(`${form.deliveryDate}T${form.deliveryTime}`);
+    return selectedDate >= limitDate;
   };
 
   const formats = [
@@ -201,11 +215,15 @@ const DeliveryStep: React.FC<Props> = ({ form, updateForm }) => {
                       }}
                       className="rounded-lg h-12 bg-background"
                     />
-                    {(!form.deliveryDate || form.deliveryDate === getMinDateTime().minDateString) && (
+                    {!isDateTimeValid() ? (
+                      <div className="text-xs text-red-500 mt-1 pl-1 font-medium">
+                        Min allowed: {getMinDateTime().minDateString} at {getMinDateTime().minTimeString}
+                      </div>
+                    ) : (!form.deliveryDate || form.deliveryDate === getMinDateTime().minDateString) ? (
                       <div className="text-xs text-[#eba354] mt-1 pl-1 font-medium">
                         Min time allowed: {getMinDateTime().minTimeString}
                       </div>
-                    )}
+                    ) : null}
                   </div>
                 </div>
               )}

@@ -112,10 +112,24 @@ const OrderPage = () => {
     if (step === 3) return form.heartMessage && form.tone && form.length;
     if (step === 4) {
       if (!form.deliveryFormat) return false;
-      const requiresDetails = form.deliveryFormat === "email" || form.deliveryFormat === "pdf" || form.isScheduled;
+      
+      const requiresDetails = (form.deliveryFormat === "email" || form.deliveryFormat === "pdf") || form.isScheduled || (!form.isInstant && !form.isScheduled);
       if (!requiresDetails) return true;
+      
       if ((form.deliveryFormat === "email" || form.deliveryFormat === "pdf") && !form.recipientEmail) return false;
-      if (form.isScheduled && (!form.deliveryDate || !form.deliveryTime)) return false;
+      
+      const requiresDateTime = form.isScheduled || (!form.isInstant && !form.isScheduled);
+      if (requiresDateTime) {
+        if (!form.deliveryDate || !form.deliveryTime) return false;
+        
+        // Link the date and time to validate against the minimum limit
+        const hoursToAdd = form.isInstant ? 3 : 12;
+        const limitDate = new Date(new Date().getTime() + hoursToAdd * 60 * 60 * 1000);
+        
+        // Construct selected datetime securely
+        const selectedDate = new Date(`${form.deliveryDate}T${form.deliveryTime}`);
+        if (selectedDate < limitDate) return false;
+      }
       return true;
     }
     if (step === 5) return form.email && form.fullName && form.phone && form.deliveryAddress;
