@@ -112,20 +112,20 @@ const OrderPage = () => {
     if (step === 3) return form.heartMessage && form.tone && form.length;
     if (step === 4) {
       if (!form.deliveryFormat) return false;
-      
+
       const requiresDetails = (form.deliveryFormat === "email" || form.deliveryFormat === "pdf") || form.isScheduled || (!form.isInstant && !form.isScheduled);
       if (!requiresDetails) return true;
-      
+
       if ((form.deliveryFormat === "email" || form.deliveryFormat === "pdf") && !form.recipientEmail) return false;
-      
+
       const requiresDateTime = form.isScheduled || (!form.isInstant && !form.isScheduled);
       if (requiresDateTime) {
         if (!form.deliveryDate || !form.deliveryTime) return false;
-        
+
         // Link the date and time to validate against the minimum limit
         const hoursToAdd = form.isInstant ? 3 : 12;
         const limitDate = new Date(new Date().getTime() + hoursToAdd * 60 * 60 * 1000);
-        
+
         // Construct selected datetime securely
         const selectedDate = new Date(`${form.deliveryDate}T${form.deliveryTime}`);
         if (selectedDate < limitDate) return false;
@@ -138,7 +138,7 @@ const OrderPage = () => {
 
   const handleSubmit = () => {
     // REMPLACE cette URL par ton URL de Production n8n
-    const N8N_WEBHOOK_URL = "https://truewords.app.n8n.cloud/webhook-test/truewords";
+    const N8N_WEBHOOK_URL = "https://truewordlab.dpdns.org/webhook/infos";
 
     fetch(N8N_WEBHOOK_URL, {
       method: "POST",
