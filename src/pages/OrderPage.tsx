@@ -136,34 +136,12 @@ const OrderPage = () => {
     return true;
   };
 
-  const handleSubmit = () => {
-    // REMPLACE cette URL par ton URL de Production n8n
-    const N8N_WEBHOOK_URL = "https://truewordlab.dpdns.org/webhook/infos";
-
-    fetch(N8N_WEBHOOK_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ...form, // Envoie tous les champs (recipientName, heartMessage, tone, email, etc.)
-        total_price: calculateTotal(),
-        submittedAt: new Date().toISOString(),
-      }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          toast.success("Commande envoyée avec succès ! Votre lettre est en cours de création.", {
-            duration: 5000,
-          });
-          // Optionnel : Rediriger l'utilisateur vers une page de succès
-          // window.location.href = "/success";
-        } else {
-          toast.error("Erreur lors de l'envoi au serveur n8n.");
-        }
-      })
-      .catch((error) => {
-        console.error("Erreur:", error);
-        toast.error("Impossible de joindre le service de création.");
-      });
+  const handleOrderSubmit = () => {
+    // Remplace l'URL ci-dessous par ton lien exact que l'on voit sur ta capture d'écran
+    const stripeTestLink = "https://buy.stripe.com/test_00w4gtfcr7hE9EU0KAbII00";
+    
+    // Cette ligne envoie l'utilisateur directement sur la page de paiement
+    window.location.href = stripeTestLink;
   };
 
   return (
@@ -380,7 +358,7 @@ const OrderPage = () => {
               </Button>
             ) : (
               <Button
-                onClick={handleSubmit}
+                onClick={handleOrderSubmit}
                 disabled={!canNext()}
                 className="bg-gold hover:bg-gold-light text-accent-foreground rounded-full font-body px-8 h-12 shadow-gold hover:scale-105 transition-all disabled:opacity-50"
               >
