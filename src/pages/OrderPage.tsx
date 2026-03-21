@@ -138,7 +138,7 @@ const OrderPage = () => {
 
   const handleOrderSubmit = () => {
     // Remplace l'URL ci-dessous par ton lien exact que l'on voit sur ta capture d'écran
-    const stripeTestLink = "https://buy.stripe.com/test_00w4gtfcr7hE9EU0KAbII00";
+    const stripeTestLink = "https://truewordlab.dpdns.org/webhook-test/infos";
     
     // Cette ligne envoie l'utilisateur directement sur la page de paiement
     window.location.href = stripeTestLink;
