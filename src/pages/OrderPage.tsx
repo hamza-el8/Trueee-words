@@ -136,12 +136,32 @@ const OrderPage = () => {
     return true;
   };
 
-  const handleOrderSubmit = () => {
-    // Remplace l'URL ci-dessous par ton lien exact que l'on voit sur ta capture d'écran
-    const stripeTestLink = "https://truewordlab.dpdns.org/webhook-test/infos";
-    
-    // Cette ligne envoie l'utilisateur directement sur la page de paiement
-    window.location.href = stripeTestLink;
+  const handleOrderSubmit = async () => {
+    const formData = {
+      ...form,
+      totalPrice: calculateTotal(),
+      subtotalPrice: calculateSubtotal(),
+      appliedDiscount: discount,
+    };
+
+    try {
+      const response = await fetch('https://truewordlab.dpdns.org/webhook-test/infos', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        toast.success("Commande envoyée avec succès !");
+      } else {
+        toast.error("Erreur lors de l'envoi au serveur.");
+      }
+    } catch (error) {
+      console.error("Erreur de connexion :", error);
+      toast.error("Erreur de connexion.");
+    }
   };
 
   return (
